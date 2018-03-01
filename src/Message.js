@@ -15,6 +15,13 @@ import { isSameUser, isSameDay } from './utils';
 
 export default class Message extends React.Component {
 
+  componentDidMount() {
+    // console.log('------------------------------------------')
+    // console.log('---------- componentDidMount -------------')
+    // console.log('------------------------------------------')
+    // console.log(this.props.currentMessage);
+    // console.log('------------------------------------------')
+  }
   getInnerComponentProps() {
     const {containerStyle, ...props} = this.props;
     return {
@@ -62,11 +69,21 @@ export default class Message extends React.Component {
     }
     return <Avatar {...avatarProps} />;
   }
-
+  onMessageLayout = (event) => {
+    console.log('---------------------------------');
+    console.log('----------onMessageLayout--------');
+    console.log(event.nativeEvent.layout.x)
+    console.log(event.nativeEvent.layout.y)
+    console.log(event.nativeEvent.layout.width)
+    console.log(event.nativeEvent.layout.height)
+    console.log(event.nativeEvent.layout)
+    console.log('---------------------------------');
+    console.log('---------------------------------');
+  }
   render() {
     const sameUser = isSameUser(this.props.currentMessage, this.props.nextMessage)
     return (
-      <View>
+      <View onLayout={this.onMessageLayout}>
         {this.renderDay()}
         {this.props.currentMessage.system ?
           this.renderSystemMessage() :

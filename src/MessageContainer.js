@@ -27,8 +27,11 @@ export default class MessageContainer extends React.Component {
         return r1.hash !== r2.hash;
       }
     });
-
+    if (props.onRenderMessage && props.messages.length > 0) {
+      this.props.onRenderMessage(props.messages[0])
+    }
     const messagesData = this.prepareMessages(props.messages);
+
     this.state = {
       dataSource: dataSource.cloneWithRows(messagesData.blob, messagesData.keys)
     };
@@ -67,7 +70,16 @@ export default class MessageContainer extends React.Component {
     if (this.props.messages === nextProps.messages) {
       return;
     }
+
+    if (this.props.onRenderMessage && nextProps.messages.length > 0) {
+      this.props.onRenderMessage(nextProps.messages[0])
+    }
+    if (this.props.onRenderMessage && nextProps.messages.length > 0) {
+      this.props.onRenderMessage(nextProps.messages[0])
+    }
+
     const messagesData = this.prepareMessages(nextProps.messages);
+
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(messagesData.blob, messagesData.keys)
     });
@@ -196,4 +208,5 @@ MessageContainer.propTypes = {
   renderMessage: PropTypes.func,
   onLoadEarlier: PropTypes.func,
   listViewProps: PropTypes.object,
+  onRenderMessage: PropTypes.func,
 };
